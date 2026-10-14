@@ -1,9 +1,17 @@
-// Owlbear manifest URLs must work when resolved against the hosting origin.
-// Do not assume that the manifest's containing folder is used as the base URL.
-export function buildManifest(template, base = '/') {
+// Explicit URLs avoid relying on Owlbear's relative URL resolution.
+export function buildManifest(template, base = '/', siteUrl = '') {
   const prefix = !base || base === './' || base === '/' ? '/' : `/${base.replace(/^\/+|\/+$/g, '')}/`;
   if (!/^\/(?:[A-Za-z0-9_-]+\/)*$/.test(prefix)) throw new Error('Invalid manifest deployment base');
-  const path = value => prefix + value.replace(/^(?:\.\/|\/)+/, '');
+  let site = null;
+  if (siteUrl) {
+    site = new URL(siteUrl);
+    if (site.protocol !== 'https:' || site.pathname !== prefix || site.search || site.hash || site.username || site.password)
+      throw new Error('SITE_URL must be the HTTPS deployment base');
+  }
+  const path = value => {
+    const pathname = prefix + value.replace(/^(?:\.\/|\/)+/, '');
+    return site ? new URL(pathname, site).href : pathname;
+  };
   return {
     ...template,
     icon: path(template.icon),

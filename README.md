@@ -117,3 +117,7 @@ Official deployment references:
 ### If Owlbear shows a GitHub Pages 404
 
 Manifest version 1.0.1 fixes deployment paths: its popover, icon and background page use explicit `/dnd-chars-sheet/` paths on GitHub Pages. If you installed version 1.0.0, refresh or re-add the extension using the same manifest URL, then reload the room so Owlbear reads the updated manifest. The GitHub account root is not this extension's site; the project lives at `/dnd-chars-sheet/`.
+
+## Installer v1.0.2
+
+The hosted build now uses full HTTPS manifest URLs and a high-contrast amber D20 icon. A fresh install URL is https://bloodchild8906.github.io/dnd-chars-sheet/manifest-v1.0.2.json . Disable the older extension and add this URL to avoid an older cached manifest. Browser-local character saves keep the same storage key and hostname. The normal manifest.json is also updated. SITE_URL and BASE_PATH must both be changed if moving to another host or a custom domain.

@@ -36,10 +36,12 @@ jobs:
       - name: Build extension for the repository path
         env:
           BASE_PATH: /${{ github.event.repository.name }}/
+          SITE_URL: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/
         run: npm run build
       - name: Validate manifest and built files
         env:
           BASE_PATH: /${{ github.event.repository.name }}/
+          SITE_URL: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/
         run: npm run validate:dist
       - name: Upload Pages artifact
         if: github.event_name != 'pull_request'
