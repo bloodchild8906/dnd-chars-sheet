@@ -1,15 +1,15 @@
 {
   "name": "dnd-chars-sheet",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "manifest_version": 1,
   "description": "VOX-style D&D character sheets, a character builder, dice rolls, and token snapshots.",
-  "icon": "./icon.svg",
+  "icon": "/icon.svg",
   "action": {
     "title": "dnd-chars-sheet",
-    "icon": "./icon.svg",
-    "popover": "./index.html",
+    "icon": "/icon.svg",
+    "popover": "/index.html",
     "width": 960,
     "height": 780
   },
-  "background_url": "./background.html"
+  "background_url": "/background.html"
 }

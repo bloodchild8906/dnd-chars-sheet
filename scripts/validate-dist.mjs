@@ -19,7 +19,7 @@ async function check(ref,parent=site){
  assert.ok((await stat(file)).isFile(),`Missing file: ${ref}`);
  return {file,url};
 }
-for(const ref of [manifest.icon,manifest.action.icon,manifest.action.popover,manifest.background_url])assert.ok(await check(ref));
+for(const ref of [manifest.icon,manifest.action.icon,manifest.action.popover,manifest.background_url]){ assert.ok(ref.startsWith('/'), 'Manifest paths must be origin-relative'); assert.ok(await check(ref,new URL(origin+'/'))); }
 for(const path of ['index.html','background.html']){
  const page=await check(path);const html=await readFile(page.file,'utf8');
  for(const m of html.matchAll(/(?:src|href)=["']([^"']+)["']/g))await check(m[1],page.url);

@@ -105,7 +105,7 @@ Third-party dependency notices are in `THIRD_PARTY_NOTICES.txt`.
 
 GitHub Pages must use **GitHub Actions** as its publishing source. No personal token or repository secret is needed: the deployment job uses the scoped `GITHUB_TOKEN` and OIDC permissions. Actions are pinned to verified commit SHAs; Dependabot checks action updates monthly.
 
-The Actions build sets `BASE_PATH` to the repository subpath, as required by Vite's GitHub Pages guide. Local builds keep relative URLs. The Owlbear manifest's popover, icon and background URLs are relative to its location. A future custom domain needs `BASE_PATH: /` in the workflow.
+The Actions build sets `BASE_PATH` to the repository subpath, as required by Vite's GitHub Pages guide. Local builds keep relative URLs. The build rewrites the Owlbear manifest's popover, icon and background URLs to explicit origin-relative paths containing the deployment base. This prevents Owlbear from opening the host root instead of the repository folder. A future custom domain needs `BASE_PATH: /` in the workflow.
 
 The workflow publishes only `dist`, not source files or browser saves. GitHub Pages is public even though local character data remains in each user's browser until they explicitly share it. A downloaded prebuilt `dist` is convenient for local use; deployment always rebuilds source instead of relying on committed build files.
 
@@ -113,3 +113,7 @@ Official deployment references:
 - https://docs.owlbear.rodeo/extensions/tutorial-sharing-your-extension/hosting-your-extension/
 - https://docs.github.com/en/pages/getting-started-with-github-pages/using-custom-workflows-with-github-pages
 - https://vite.dev/guide/static-deploy.html#github-pages
+
+### If Owlbear shows a GitHub Pages 404
+
+Manifest version 1.0.1 fixes deployment paths: its popover, icon and background page use explicit `/dnd-chars-sheet/` paths on GitHub Pages. If you installed version 1.0.0, refresh or re-add the extension using the same manifest URL, then reload the room so Owlbear reads the updated manifest. The GitHub account root is not this extension's site; the project lives at `/dnd-chars-sheet/`.
