@@ -1,6 +1,6 @@
 # dnd-chars-sheet
 
-An Owlbear Rodeo extension with a complete editable character builder, using the supplied VOX character sheet's dark panels, amber headings, cyan rolls, stat cards and tabbed layout. VOX is included as a starting preset; create blank characters for other classes.
+An Owlbear Rodeo extension with a complete editable character builder, using the supplied VOX character sheet's dark panels, amber headings, cyan rolls, stat cards and tabbed layout. New installs open an empty sheet. Create a character with the six-step wizard; the VOX example is optional in Builder.
 
 ## Install the ready-to-host version
 
@@ -32,7 +32,7 @@ py -m http.server 5173 --directory dist
 
 ## Build and play
 
-- **+ NEW** creates a blank character and opens Builder.
+- **+ NEW** opens the guided character wizard. Nothing is saved until you finish.
 - **Builder** edits identity, total level, abilities, save training, skill proficiency/expertise, armor calculation, HP, spellcasting, spell slots, attacks, spells, items, feats/features, resources, and beast forms.
 - **ADD VOX PRESET** makes another editable VOX. **DUPLICATE** copies the current character. The character selector switches without mixing state.
 - Spell and item entries expand when clicked. Spell entries are sorted by level and name and can be searched.
@@ -121,3 +121,15 @@ Manifest version 1.0.1 fixes deployment paths: its popover, icon and background 
 ## Installer v1.0.2
 
 The hosted build now uses full HTTPS manifest URLs and a high-contrast amber D20 icon. A fresh install URL is https://bloodchild8906.github.io/dnd-chars-sheet/manifest-v1.0.2.json . Disable the older extension and add this URL to avoid an older cached manifest. Browser-local character saves keep the same storage key and hostname. The normal manifest.json is also updated. SITE_URL and BASE_PATH must both be changed if moving to another host or a custom domain.
+
+## Wizard, progression and compendiums (v1.1.0)
+
+Creation walks through identity/origins, class, ability scores, training/magic, equipment/feats and review. Canceling leaves existing characters intact. Existing saves are preserved; an existing VOX character can be deleted if you want an empty start.
+
+Use **Level up / multiclass** to advance an existing class or add a different class. Total level, proficiency bonus, HP and separate Hit Dice pools update. Class features for the acquired level are imported when available. Long rests restore class Hit Dice according to the selected edition. Legacy single-class sheets migrate when leveling; split old free-text multiclass summaries into structured class rows before relying on their individual Hit Dice.
+
+The default data directory is https://raw.githubusercontent.com/5etools-mirror-3/5etools-src/main/data/ . Classes load automatically. Load species, backgrounds, feats, items and spells from wizard buttons or Compendium. Spell loading uses PHB/XPHB; import other sources as 5etools-compatible JSON. Source labels distinguish books/editions. You can change the HTTPS data directory or import custom homebrew JSON (3 MB saved limit). Homebrew persists in this browser; network-loaded data is fetched again on reload. Character exports include selected content, not the entire compendium. Failed requests show an error and allow retry or file import.
+
+Supported JSON arrays: class, subclass, classFeature, subclassFeature, race, background, feat, spell, item. Descriptions are rendered as text; 5etools markup is simplified. This is not the complete 5etools renderer: inheritance (_copy), cross-references and all mechanical effects are not resolved. Review imported entries.
+
+This is a guided editable tracker, not a complete rules engine. Review multiclass prerequisites, subclass/feat choices, spell slots (including Pact Magic), item/armor/attack bonuses and edition-specific choices. Ability changes do not retroactively recalculate HP. Starting proficiencies and spellcasting ability default from the chosen class when supplied; other choices remain editable.
