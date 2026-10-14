@@ -9,7 +9,7 @@ An Owlbear Rodeo extension with a complete editable character builder, using the
 3. In your Owlbear Rodeo profile, choose **Add Extension** and enter the hosted `manifest.json` URL, for example `https://your-host.example/manifest.json`. If hosted in a subdirectory, include that subdirectory.
 4. Enable **dnd-chars-sheet** for your room and open its action icon.
 
-The ZIP itself is not an Owlbear install link. This package is not already deployed. Your host must permit iframe embedding; do not set `X-Frame-Options: DENY` or `SAMEORIGIN`. Use HTTPS for shared hosting. Everyone in the room needs access to the same hosted extension.
+The ZIP itself is not an Owlbear install link. The repository includes automated GitHub Pages deployment (see below). Your host must permit iframe embedding; do not set `X-Frame-Options: DENY` or `SAMEORIGIN`. Use HTTPS for shared hosting. Everyone in the room needs access to the same hosted extension.
 
 ## Try it locally on Windows
 
@@ -98,3 +98,18 @@ Important files: `src/model.js` (calculations/validation/dice), `src/preset.js` 
 - https://docs.owlbear.rodeo/extensions/apis/broadcast/
 
 Third-party dependency notices are in `THIRD_PARTY_NOTICES.txt`.
+
+## GitHub Actions and GitHub Pages
+
+`.github/workflows/pages.yml` runs `npm ci`, the test suite, a clean Vite build, and manifest/asset validation for pushes and pull requests to `main`. Pull requests do not deploy or receive deployment write permissions. Successful pushes to `main`, and manual runs from `main`, upload `dist` and deploy through GitHub's official Pages actions and the `github-pages` environment. The resulting manifest URL is printed in the deployment job summary.
+
+GitHub Pages must use **GitHub Actions** as its publishing source. No personal token or repository secret is needed: the deployment job uses the scoped `GITHUB_TOKEN` and OIDC permissions. Actions are pinned to verified commit SHAs; Dependabot checks action updates monthly.
+
+The Actions build sets `BASE_PATH` to the repository subpath, as required by Vite's GitHub Pages guide. Local builds keep relative URLs. The Owlbear manifest's popover, icon and background URLs are relative to its location. A future custom domain needs `BASE_PATH: /` in the workflow.
+
+The workflow publishes only `dist`, not source files or browser saves. GitHub Pages is public even though local character data remains in each user's browser until they explicitly share it. A downloaded prebuilt `dist` is convenient for local use; deployment always rebuilds source instead of relying on committed build files.
+
+Official deployment references:
+- https://docs.owlbear.rodeo/extensions/tutorial-sharing-your-extension/hosting-your-extension/
+- https://docs.github.com/en/pages/getting-started-with-github-pages/using-custom-workflows-with-github-pages
+- https://vite.dev/guide/static-deploy.html#github-pages
