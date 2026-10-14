@@ -1,0 +1,3 @@
+export const state={ready:true,selection:['token-1'],role:'PLAYER',items:[{id:'token-1',type:'IMAGE',layer:'CHARACTER',name:'Test token',metadata:{unrelated:42}}],sent:null,listener:null};
+const OBR={isAvailable:true,onReady:fn=>fn(),room:{id:'room-1'},player:{id:'player-1',getName:async()=>'Player One',getRole:async()=>state.role,getSelection:async()=>state.selection},scene:{isReady:async()=>state.ready,items:{getItems:async ids=>state.items.filter(x=>ids.includes(x.id)),updateItems:async(ids,fn)=>fn(state.items.filter(x=>ids.includes(x.id)))}},broadcast:{sendMessage:async(...args)=>state.sent=args,onMessage:(channel,fn)=>{state.listener=fn;return ()=>state.listener=null;}}};
+export default OBR;

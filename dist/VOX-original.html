@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>VOX — Level 5 Wildfire Druid</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔥</text></svg>">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0a0c0e;--pn:#12161a;--pn2:#181e24;--ln:#262e36;--tx:#d5dce2;--dm:#7a8691;--am:#ffb000;--cy:#22d3ee;--rd:#ff4d5e;--gn:#4ade80;color-scheme:dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--tx);font:13px/1.55 'JetBrains Mono',ui-monospace,Consolas,monospace;background-image:linear-gradient(var(--ln) 1px,transparent 1px),linear-gradient(90deg,var(--ln) 1px,transparent 1px);background-size:48px 48px;background-attachment:fixed}
+body::before{content:"";position:fixed;inset:0;background:radial-gradient(ellipse at 50% 0,rgba(10,12,14,.55),var(--bg) 85%);pointer-events:none;z-index:-1}
+h1,h2,h3{font-family:Rajdhani,'Arial Narrow',sans-serif;margin:0;font-weight:700}
+.w{max-width:1040px;margin:0 auto;padding:18px 14px 90px}
+header{border:1px solid var(--ln);border-left:4px solid var(--am);background:var(--pn);padding:16px 18px;position:relative;overflow:hidden}
+header::after{content:"VX";position:absolute;right:10px;top:-22px;font:700 150px/1 Rajdhani,sans-serif;color:rgba(255,176,0,.06);pointer-events:none}
+h1{font-size:clamp(44px,10vw,72px);line-height:.95;letter-spacing:.06em;color:var(--am)}
+.sub{color:var(--dm);margin-top:6px}.q{color:var(--tx);margin:8px 0 0;font-style:italic}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px;align-items:center}
+.chip{border:1px solid var(--ln);background:var(--pn2);padding:2px 9px;font-size:12px}.chip b{color:var(--cy);font-weight:400}
+input,textarea{background:var(--bg);border:1px solid var(--ln);color:var(--tx);padding:4px 8px;font:inherit;max-width:100%}
+input[type=number]{width:64px}textarea{width:100%;min-height:90px;resize:vertical}
+header input{background:var(--pn2);width:140px}
+.bar{display:grid;grid-template-columns:repeat(auto-fit,minmax(104px,1fr));gap:8px;margin:12px 0}
+.st{background:var(--pn);border:1px solid var(--ln);padding:8px 10px;text-align:center}
+.st .v{font:700 30px/1.1 Rajdhani,sans-serif}.st .l{color:var(--dm);font-size:11px}
+.hp{grid-column:span 2;border-color:var(--am)}.hp .v{color:var(--gn)}.hp.lo .v{color:var(--am)}.hp.cr .v{color:var(--rd)}
+.hpc{display:flex;justify-content:center;align-items:center;gap:8px}.hpc button{width:34px;height:30px}
+.abil{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin-bottom:10px}
+.ab{background:var(--pn);border:1px solid var(--ln);padding:8px 4px;text-align:center;cursor:pointer}
+.ab:hover,.roll:hover{border-color:var(--cy)}
+.ab .n{color:var(--dm);font-size:11px}.ab .m{font:700 30px/1.1 Rajdhani,sans-serif;color:var(--cy)}.ab .s{font-size:11px;color:var(--dm)}
+.ab.p{border-bottom:3px solid var(--am)}.ab.p .s{color:var(--am)}
+@media(max-width:560px){.abil{grid-template-columns:repeat(3,1fr)}.hp{grid-column:span 1}}
+.gear{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:12px}
+.tg{border:1px solid var(--ln);background:var(--pn);padding:5px 10px;cursor:pointer;display:flex;gap:8px;align-items:center}
+.tg:has(input:checked){border-color:var(--am);color:var(--am)}
+input[type=checkbox]{appearance:none;-webkit-appearance:none;width:18px;height:18px;border:2px solid var(--am);margin:0 2px;cursor:pointer;vertical-align:middle;background:transparent;padding:0}
+input[type=checkbox]:checked{background:var(--ln);border-color:var(--dm)}
+.tg input:checked{background:var(--am);border-color:var(--am)}
+nav{display:flex;gap:2px;border-bottom:1px solid var(--ln);overflow-x:auto;position:sticky;top:env(safe-area-inset-top,0px);background:var(--bg);z-index:5}
+nav button{background:none;border:0;border-bottom:3px solid transparent;color:var(--dm);font:700 17px Rajdhani,sans-serif;letter-spacing:.06em;padding:8px 16px;cursor:pointer;white-space:nowrap}
+nav button.on{color:var(--am);border-color:var(--am)}
+button:focus-visible,input:focus-visible,textarea:focus-visible,.ab:focus-visible,.roll:focus-visible{outline:2px solid var(--cy);outline-offset:2px}
+.tab{display:none;padding-top:14px}.tab.on{display:block}
+.g{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:12px}
+.c{background:var(--pn);border:1px solid var(--ln);padding:12px 14px;min-width:0}.c.full{grid-column:1/-1}
+.c h2{font-size:21px;color:var(--am);border-bottom:1px solid var(--ln);padding-bottom:4px;margin-bottom:8px;text-transform:uppercase}
+.c h3{font-size:16px;color:var(--cy);margin:10px 0 2px}
+p{margin:4px 0}.dm{color:var(--dm)}.am{color:var(--am)}.cy{color:var(--cy)}.sm{font-size:11px;color:var(--dm)}
+table{width:100%;border-collapse:collapse}td,th{padding:5px 6px;border-bottom:1px solid var(--ln);text-align:left;vertical-align:top}th{color:var(--dm);font-weight:400;font-size:11px}
+.roll{display:inline-block;min-width:44px;text-align:center;border:1px solid var(--ln);background:var(--pn2);color:var(--cy);padding:1px 6px;cursor:pointer;font:inherit}
+button.b{background:var(--pn2);color:var(--tx);border:1px solid var(--ln);padding:5px 12px;font:inherit;cursor:pointer}button.b:hover{border-color:var(--am);color:var(--am)}
+.rest{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.tr{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:6px 0;border-bottom:1px dashed var(--ln);flex-wrap:wrap}.tr small{color:var(--dm);display:block;font-size:11px}
+.tag{color:var(--am);font-size:11px;border:1px solid var(--am);padding:0 5px;margin-left:4px;font-family:'JetBrains Mono',monospace;font-weight:400}
+.note{border-left:3px solid var(--cy);background:var(--pn2);padding:8px 10px;margin:10px 0;color:var(--tx)}
+.sk{display:grid;grid-template-columns:1fr 1fr;gap:0 18px}.sk div{display:flex;justify-content:space-between;align-items:center;padding:3px 0;border-bottom:1px solid var(--ln)}
+.sk .pr::before{content:"◆ ";color:var(--am)}.sk div:not(.pr)::before{content:"◇ ";color:var(--dm)}.sk span:first-child{flex:1}
+@media(max-width:560px){.sk{grid-template-columns:1fr}}
+.it{border-bottom:1px solid var(--ln);padding:6px 0}.it:last-child{border:0}.it b{color:var(--cy)}
+.slots{display:flex;gap:10px;flex-wrap:wrap}.slot{border:1px solid var(--ln);padding:8px 10px}
+#log{position:fixed;right:10px;bottom:calc(10px + env(safe-area-inset-bottom,0px));width:260px;max-width:calc(100vw - 20px);background:var(--pn);border:1px solid var(--cy);z-index:9}
+#log .h{display:flex;justify-content:space-between;padding:4px 8px;color:var(--cy);border-bottom:1px solid var(--ln);cursor:pointer}
+#log .e{padding:3px 8px;border-bottom:1px solid var(--ln);display:flex;justify-content:space-between;gap:6px}
+#log .e b{font:700 18px/1.2 Rajdhani,sans-serif}.e.n20 b{color:var(--am)}.e.n1 b{color:var(--rd)}#log.min .e{display:none}
+#dlg{position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:20;display:none;align-items:center;justify-content:center;padding:16px}#dlg.on{display:flex}
+#dlg>div{background:var(--pn);border:1px solid var(--am);padding:14px;width:min(560px,100%)}#dlg textarea{min-height:240px;font-size:11px}
+footer{display:flex;flex-wrap:wrap;gap:8px;justify-content:space-between;align-items:center;margin-top:20px}
+.fh{display:flex;gap:8px;align-items:center;justify-content:space-between;margin-bottom:6px}.fn{font:700 18px Rajdhani,sans-serif;color:var(--am);width:62%}.fr{display:flex;gap:8px;flex-wrap:wrap;margin:4px 0}.fr label{display:flex;gap:4px;align-items:center;font-size:11px;color:var(--dm)}.fr input[type=number]{width:54px}.fcard{display:flex;flex-direction:column;gap:6px}.fcard.act{border-color:var(--am);box-shadow:inset 0 0 0 1px var(--am)}.wsb{display:flex;justify-content:space-between;align-items:center;gap:8px;border:1px solid var(--am);background:rgba(255,176,0,.08);color:var(--am);padding:6px 12px;margin-bottom:10px}
+#log .rm,.mc{display:flex;gap:4px}#log .rm{padding:4px 6px;border-bottom:1px solid var(--ln)}#log.min .rm{display:none}
+.rm button,.mc button{flex:1;background:var(--pn2);border:1px solid var(--ln);color:var(--dm);font:700 11px 'JetBrains Mono',monospace;padding:3px 0;cursor:pointer}.mc button{padding:7px 12px;flex:none}
+.rm button.on,.mc button.on{border-color:var(--cy);color:var(--cy)}.rm .critb.on,.mc .critb.on{border-color:var(--rd);color:var(--rd)}
+#log .e small{display:block;color:var(--dm);font-size:10px;font-weight:400}#log .e s,.hr s,#dsub s{opacity:.45}
+#toast{position:fixed;left:50%;top:calc(60px + env(safe-area-inset-top,0px));transform:translate(-50%,-12px);background:var(--pn);border:2px solid var(--cy);padding:8px 24px;text-align:center;z-index:30;opacity:0;pointer-events:none;transition:.2s;max-width:92vw}
+#toast.on{opacity:1;transform:translate(-50%,0)}#toast b{display:block;font:700 56px/1 Rajdhani,sans-serif;color:var(--cy)}#toast.n20{border-color:var(--am)}#toast.n20 b{color:var(--am)}#toast.n1{border-color:var(--rd)}#toast.n1 b{color:var(--rd)}#toast small{display:block;color:var(--dm);font-size:11px}
+#fab{position:fixed;left:10px;bottom:calc(10px + env(safe-area-inset-bottom,0px));width:52px;height:52px;border-radius:50%;background:var(--am);color:#000;border:0;font-size:26px;cursor:pointer;z-index:9;box-shadow:0 0 0 3px var(--bg)}.dt #fab,.dt #log{display:none}
+#dbig{border:1px solid var(--ln);background:var(--pn2);text-align:center;padding:18px 10px;margin-bottom:12px}
+#dres{font:700 clamp(72px,22vw,128px)/1 Rajdhani,sans-serif;color:var(--cy);min-height:1em}#dres.n20{color:var(--am);text-shadow:0 0 24px rgba(255,176,0,.5)}#dres.n1{color:var(--rd)}#dsub{color:var(--dm);min-height:3em;margin-top:6px}
+.dice{display:grid;grid-template-columns:repeat(auto-fit,minmax(78px,1fr));gap:8px;margin:12px 0}.dice button{background:var(--pn2);border:1px solid var(--ln);color:var(--tx);font:700 26px Rajdhani,sans-serif;padding:14px 0;cursor:pointer}.dice button:hover,.dice button:active{border-color:var(--am);color:var(--am)}
+.dctl{display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center}.stp{display:flex;align-items:center;gap:6px}.stp b{min-width:34px;text-align:center;font:700 22px Rajdhani,sans-serif;color:var(--am)}.stp button{width:32px;height:32px}
+.hr{display:flex;justify-content:space-between;gap:10px;padding:6px 0;border-bottom:1px solid var(--ln)}.hr small{display:block;color:var(--dm);font-size:11px}.hr b{font:700 26px/1 Rajdhani,sans-serif;color:var(--cy)}.hr.n20 b{color:var(--am)}.hr.n1 b{color:var(--rd)}
+@media print{#fab,#toast{display:none}}
+@media print{body{background:#fff;color:#000}.w{padding:0}#log,nav,.rest,footer,.gear,#dlg{display:none}.tab{display:block!important;break-before:page}.c,.st,.ab{break-inside:avoid;background:#fff;border-color:#999}}
+</style></head><body><div class="w">
+<header><h1>VOX</h1>
+<div class="sub">LEVEL 5 · TIEFLING · DRUID / CIRCLE OF WILDFIRE · 2024 RULES</div>
+<p class="q">A keeper of the cycle: fire consumes, ash nourishes, and life returns.</p>
+<div class="chips"><label class="chip"><b>Player</b> <input data-save="player" placeholder="Name"></label><label class="chip"><b>Background</b> <input data-save="background" placeholder="Player chooses"></label><label class="chip"><b>Align</b> <input data-save="alignment" placeholder="Optional"></label></div></header>
+
+<div class="bar">
+<div class="st"><div class="v"><b data-v="ac" data-n>15</b></div><div class="l">ARMOR CLASS</div></div>
+<div class="st hp" id="hpbox"><div class="hpc"><button class="b" onclick="hp(-1)" aria-label="Lose 1 HP">−</button><div class="v"><span id="hpv">38</span><span class="dm" style="font-size:18px"> / 38</span><span id="thp" class="cy" style="font-size:16px"></span></div><button class="b" onclick="hp(1)" aria-label="Gain 1 HP">+</button></div>
+<div class="l">HIT POINTS · <span class="roll" style="min-width:0;padding:0 4px" onclick="hp(-5)">−5</span> <span class="roll" style="min-width:0;padding:0 4px" onclick="hp(5)">+5</span></div></div>
+<div class="st"><div class="v" id="spd">30<span style="font-size:16px"> ft</span></div><div class="l">SPEED</div></div>
+<div class="st"><div class="v">+3</div><div class="l">PROFICIENCY</div></div>
+<div class="st"><div class="v"><b data-v="dc" data-n>15</b></div><div class="l">SPELL SAVE DC</div></div>
+<div class="st"><div class="v"><b data-v="atk">+7</b></div><div class="l">SPELL ATTACK</div></div>
+<div class="st"><div class="v">17</div><div class="l">PASSIVE PERC.</div></div>
+<div class="st"><div class="v">5d8</div><div class="l">HIT DICE</div></div></div>
+<div class="abil" id="abil"></div>
+<div class="gear"><span class="sm">GEAR STATUS</span><label class="tg"><input type="checkbox" data-save="moon"> Moon Sickle held (+1 spell atk / DC)</label><label class="tg"><input type="checkbox" data-save="cloak"> Cloak worn (+1 AC / saves)</label></div>
+<p class="sm" style="margin:-4px 0 12px">Tap any ability, save, skill, attack or damage value to roll. Toggle gear above and every number updates. Both items are suggested rewards, subject to DM approval.</p>
+<div id="wsb"></div><nav id="nav"></nav>
+
+<section class="tab on" id="t0"><div class="g">
+<div class="c full"><h2>Combat</h2><table><tr><th>ATTACK</th><th>HIT</th><th>DAMAGE</th><th>NOTES</th></tr>
+<tr><td class="am">Produce Flame</td><td><span class="roll" onclick="rl('Produce Flame',V.atk)" data-v="atk">+7</span></td><td><span class="roll" onclick="rd('Produce Flame','2d8')">2d8</span></td><td class="dm">Fire · 30 ft. · cantrip</td></tr>
+<tr><td class="am">Primal Savagery</td><td><span class="roll" onclick="rl('Primal Savagery',V.atk)" data-v="atk">+7</span></td><td><span class="roll" onclick="rd('Primal Savagery','2d10')">2d10</span></td><td class="dm">Acid · melee spell attack · cantrip</td></tr>
+<tr><td class="am" id="sicklen">Sickle</td><td><span class="roll" onclick="rl('Sickle',V.sick)" data-v="sick">+2</span></td><td><span class="roll" onclick="rd('Sickle','1d4',V.sickd)" id="sickd">1d4-1</span></td><td class="dm">Slashing · Light, Nick · simple weapon</td></tr>
+<tr><td class="am">Scimitar</td><td><span class="roll" onclick="rl('Scimitar',V.scim)" data-v="scim">+2</span></td><td><span class="roll" onclick="rd('Scimitar','1d6',2)">1d6+2</span></td><td class="dm">Slashing · Finesse, Light · martial: no proficiency in 2024 unless Warden</td></tr>
+<tr><td class="am">Quarterstaff</td><td><span class="roll" onclick="rl('Quarterstaff',2)">+2</span></td><td><span class="roll" onclick="rd('Quarterstaff','1d6',-1)">1d6-1</span></td><td class="dm">Bludgeoning · versatile 1d8-1</td></tr></table>
+<div class="note"><b>War Caster:</b> advantage on Constitution saves to maintain Concentration; cast somatic components with hands full; Reactive Spell: when a creature provokes an Opportunity Attack by leaving your reach, use your Reaction to cast a 1-action spell that targets only it. The feat also grants +1 to INT, WIS or CHA.</div>
+<button class="b" onclick="rl('Concentration (CON, adv)',V.con,1)">Roll Concentration save (advantage)</button></div>
+<div class="c"><h2>Skills &amp; Saves</h2><div class="sk" id="sk"></div>
+<p class="sm" style="margin-top:8px">◆ = proficient. Skill picks are provisional until a background is chosen. Magician Primal Order adds WIS (+4) to Arcana and Nature checks. Saves: INT and WIS proficient.</p></div>
+<div class="c"><h2>Rest Resources</h2>
+<div class="tr"><div>Wild Shape<small>2 uses · checked = spent · fuels beast forms or the spirit</small></div><div><input type="checkbox" data-save="wild1"><input type="checkbox" data-save="wild2"></div></div>
+<div class="tr"><div>Heroic Inspiration<small>checked = have it</small></div><div><input type="checkbox" data-save="inspiration"></div></div>
+<div class="tr"><div>Hit Dice spent<small>d8 + CON (+2) per die</small></div><div><input type="number" min="0" max="5" value="0" data-save="hitdice"> / 5 <span class="roll" onclick="rd('Hit Die','1d8',2)">1d8+2</span></div></div>
+<div class="rest" style="margin-top:10px"><button class="b" onclick="rest('s')">☾ SHORT REST</button><button class="b" onclick="rest('l')">☀ LONG REST</button></div>
+<p class="sm">Short Rest regains one Wild Shape use. Long Rest resets HP, Wild Shape and spell slots.</p></div>
+<div class="c full"><h2>Wildfire Spirit</h2><p><b class="cy">Summon:</b> Action, expend a Wild Shape use. Creatures of your choice within 10 ft. of its appearance make a DEX save (DC <b data-v="dc" data-n>15</b>) or take <span class="roll" onclick="rd('Summon burst','2d6')">2d6</span> fire damage.</p>
+<p><b class="cy">AC</b> 13 · <b class="cy">HP</b> 30 · <b class="cy">Speed</b> 30 ft., fly 30 ft. (hover)</p>
+<p><b class="cy">Flame Seed:</b> <span class="roll" onclick="rl('Flame Seed',V.atk)" data-v="atk">+7</span> to hit, <span class="roll" onclick="rd('Flame Seed','1d6',3)">1d6+3</span> fire, range 60 ft.</p>
+<p><b class="cy">Fiery Teleportation:</b> spirit and willing creatures within 5 ft. teleport up to 15 ft. Creatures near its departure make a DEX save or take <span class="roll" onclick="rd('Teleport burn','1d6',3)">1d6+3</span> fire.</p>
+<p class="dm">Acts immediately after your turn. Takes the Dodge action unless you command it with your Bonus Action.</p></div>
+</div></section>
+
+<section class="tab" id="tws"><div class="g">
+<div class="c full"><h2>Wild Shape</h2>
+<div class="tr"><div>Uses left<small>2 uses · Short Rest +1 · Long Rest all</small></div><b class="am" id="wsu" style="font:700 28px Rajdhani,sans-serif"></b></div>
+<p class="dm">Bonus Action to assume a form, and a Bonus Action to leave early. Lasts 2 hours (half druid level) or until you use Wild Shape again, are Incapacitated, or die. You gain 5 Temporary Hit Points (druid level). Known forms: 6, max CR 1/2, no Fly speed; replace one after a Long Rest. Your stats become the beast's, but you keep HP, Hit Dice, INT/WIS/CHA, class features, languages, feats, and your skill and save proficiencies (the beast's bonus is used where higher). <b class="am">You can't cast spells</b> while shifted, but Concentration is not broken. Equipment falls, merges (no effect) or is worn by the form, as you choose; the DM decides what is practical.</p>
+<label class="sm" style="display:block;margin-top:8px"><input type="checkbox" data-save="wsworn"> Cloak of Protection stays worn in beast form (only if your DM allows it; otherwise it merges and does nothing)</label>
+<div id="wsa"></div>
+<div class="rest" style="margin-top:10px"><button class="b" onclick="spirit()">☄ SUMMON WILDFIRE SPIRIT (−1 USE)</button><button class="b" onclick="comp()">FIND FAMILIAR (−1 USE)</button></div></div>
+<div class="c full"><h2>Wild Resurgence <span class="tag">LV5</span></h2><p>Once on each of your turns, if you have no Wild Shape uses left, expend a spell slot to regain one use (no action). You can also expend a use to gain one level 1 slot, once per Long Rest.</p><div class="rest"><button class="b" onclick="wrSlot()">SLOT → WILD SHAPE USE</button><button class="b" onclick="wrUse()">WILD SHAPE USE → LEVEL 1 SLOT</button><label class="sm">Slot trade used <input type="checkbox" data-save="wr"></label></div></div>
+</div><p class="am" style="margin:16px 0 2px">KNOWN FORMS (6)</p><p class="sm" style="margin:0 0 8px">These are SRD 5.1 stat blocks, not the 2024 Monster Manual versions, which differ in places (for example Darkvision and bite damage). Check your DM's book and edit any field. Attacks format: Name +hit dice+mod; next attack. Beast skills are used where higher than yours.</p><div class="g" id="fm"></div></section>
+
+<section class="tab" id="t1"><div class="g">
+<div class="c"><h2>Proficiencies</h2><div class="it"><b>Armor</b> — light armor and shields</div><div class="it"><b>Weapons</b> — simple weapons (Warden adds martial)</div><div class="it"><b>Tools</b> — herbalism kit, plus any from your background</div><div class="it"><b>Saves</b> — Intelligence, Wisdom</div><div class="it"><b>Languages</b> — Common, Druidic, and two of your choice (Infernal suggested)</div><p class="sm">Provisional until a background is chosen.</p></div>
+<div class="c"><h2>Species: Tiefling</h2>
+<div class="it"><b>Darkvision</b> — 60 ft.</div>
+<div class="it"><b>Fiendish Legacy</b> <span class="tag">PROVISIONAL</span> — Abyssal, Chthonic or Infernal: a damage resistance, a cantrip, and spells at levels 3 and 5. Choose with the DM.</div>
+<div class="it"><b>Otherworldly Presence</b> — know Thaumaturgy.</div>
+<p class="sm">The upload listed only the Infernal language, which is a 2014 trait. 2024 Tieflings use the three traits above.</p></div>
+<div class="c"><h2>Druid Features</h2>
+<div class="it"><b>Druidic</b> — secret druid language; leave hidden messages (others notice them with DC 15 Investigation but cannot read them without magic). Speak with Animals is always prepared.</div>
+<div class="it"><b>Spellcasting</b> — Wisdom-based prepared spells; druidic focus.</div>
+<div class="it"><b>Primal Order</b> <span class="tag">MAGICIAN, PROVISIONAL</span> — extra druid cantrip and a WIS bonus to Arcana or Nature. <label>Switch to Warden? <input type="checkbox" data-save="warden"></label><br><span class="sm">Warden: martial weapons and medium armor training instead.</span></div>
+<div class="it"><b>Wild Shape</b> — transform into known beast forms, or summon your Wildfire Spirit.</div>
+<div class="it"><b>Wild Companion</b> — Magic action: expend a spell slot or a Wild Shape use to cast Find Familiar without material components. The familiar is Fey and vanishes when you finish a Long Rest.</div>
+<div class="it"><b>Wild Resurgence</b> <span class="tag">LV5</span> — trade spell slots and Wild Shape uses under the class rules.</div></div>
+<div class="c"><h2>Circle of Wildfire</h2>
+<div class="it"><b>Circle Spells</b> — always prepared: Burning Hands, Cure Wounds, Flaming Sphere, Scorching Ray, Plant Growth, Revivify.</div>
+<div class="it"><b>Summon Wildfire Spirit</b> — a fiery companion powered by Wild Shape.</div>
+<div class="it"><b>Wildfire theme</b> — destruction clears space for new growth. The spirit is a separate creature, not a mount.</div>
+<div class="it"><b>War Caster</b> <span class="tag">LV4 FEAT</span> — chosen instead of an Ability Score Improvement.</div>
+<div class="note">This build assumes the 2024 Druid chassis with the Circle of Wildfire subclass adapted from Tasha's Cauldron of Everything. DM approval recommended.</div></div>
+</div></section>
+
+<section class="tab" id="t2"><div class="rest"><button class="b" onclick="rest('l')">☀ LONG REST (RESET SLOTS)</button></div><div class="g">
+<div class="c"><h2>Spell Slots</h2><div class="slots" id="slots"></div><p class="sm" style="margin-top:8px">Check a slot when spent. Spell attack <b data-v="atk">+7</b> · save DC <b data-v="dc" data-n>15</b>.</p></div>
+<div class="c"><h2>Always Prepared</h2><p><b class="cy">1st:</b> Burning Hands, Cure Wounds, Speak with Animals <span class="sm">(Druidic)</span></p><p><b class="cy">2nd:</b> Flaming Sphere, Scorching Ray</p><p><b class="cy">3rd:</b> Plant Growth, Revivify</p><h3>Cantrips</h3><p>Produce Flame, Guidance, Primal Savagery, Thorn Whip</p></div>
+<div class="c full"><h2>Prepared Spells</h2><p class="dm">Choose prepared druid spells in addition to the Circle spells. Suggested: Healing Word, Entangle, Faerie Fire, Goodberry, Moonbeam, Pass without Trace, Spike Growth, Dispel Magic, Call Lightning.</p>
+<textarea data-save="prepared">Healing Word, Entangle, Faerie Fire, Goodberry, Moonbeam, Pass without Trace, Spike Growth, Dispel Magic, Call Lightning</textarea><p class="sm">Editable. Review applicable 2014 / 2024 spell versions with your DM.</p></div>
+</div></section>
+
+<section class="tab" id="t3"><div class="g">
+<div class="c"><h2>Magical Items</h2>
+<div class="it"><b>Moon Sickle +1</b> <span class="tag">UNCOMMON · DRUID ATTUNEMENT</span><br>+1 to attack and damage with it, plus +1 to spell attack rolls and save DCs of druid spells while held. Works as a druidic focus. Healing spells add 1d4 (<span class="roll" onclick="rd('Moon Sickle heal','1d4')">1d4</span>). Found among the possessions of a ruined roadside shrine.</div>
+<div class="it"><b>Cloak of Protection</b> <span class="tag">UNCOMMON · ATTUNED</span><br>+1 AC and +1 to all saving throws while worn. A reward from a caravan warden after a dangerous crossing.</div>
+<p class="sm">Attunement slots: 2 / 3 when both are attuned. Baseline stats assume neither; use the gear toggles at the top. Both attuned: AC 16, spell attack +8, DC 16, saves +1.</p></div>
+<div class="c"><h2>Supplies &amp; Money</h2>
+<p>Leather armor, wooden shield, scimitar, quarterstaff, druidic focus, explorer's pack, bedroll, waterskin, 50 ft. hemp rope, tinderbox, 10 torches, 7 days rations, herbalism kit, travel cloak.</p>
+<p class="sm">AC 15 = leather 11 + DEX 2 + shield 2. Hide armor is medium, which Magician Druids cannot wear in 2024.</p>
+<div class="tr"><div>Gold <input type="number" value="94" min="0" data-save="gold"> Silver <input type="number" value="17" min="0" data-save="silver"> Copper <input type="number" value="6" min="0" data-save="copper"></div></div>
+<h3>Found curiosities</h3><p>Glass vial of black volcanic sand, charred brass compass, smooth river-stone carved with a spiral, copper leaf pendant, half-burnt trail map.</p></div>
+<div class="c full"><h2>Inventory Notes</h2><textarea data-save="inventorynotes" placeholder="Additional treasure, equipment, consumables..."></textarea></div>
+</div></section>
+
+<section class="tab" id="t4"><div class="g">
+<div class="c"><h2>Connections</h2>
+<div class="it"><b>Maelis Emberroot</b> <span class="tag">HERBALIST</span><br>Travelling herbalist. Trades rare plants and shares news of blighted forests.</div>
+<div class="it"><b>Captain Ilyra Fen</b> <span class="tag">CARAVAN</span><br>Caravan guard. Reliable contact who can arrange passage or escort work.</div>
+<div class="it"><b>Thorn Ashvale</b> <span class="tag">SHRINE</span><br>Shrine keeper. Studies wildfire spirits and can identify unusual druidic symbols.</div>
+<div class="it"><b>Verrick Sable</b> <span class="tag">DEALER</span><br>Relic dealer. Occasional buyer of curiosities, whose promises deserve scrutiny.</div>
+<p class="sm">Optional NPC relationships, not an imposed backstory.</p></div>
+<div class="c"><h2>Player-Owned Details</h2><h3>Backstory</h3><textarea data-save="backstory" placeholder="Left blank for the player"></textarea><h3>Personality / ideals / bonds / flaws</h3><textarea data-save="personality" placeholder="Left blank for the player"></textarea></div>
+<div class="c full"><h2>Field Notes</h2><textarea data-save="notes" style="min-height:230px" placeholder="Quest notes, people met, discoveries..."></textarea></div>
+</div></section>
+
+<section class="tab" id="tdice"><div class="g">
+<div class="c full"><h2>Dice Roller</h2>
+<div id="dbig"><div id="dres">—</div><div id="dsub">Tap a die to roll</div></div>
+<div class="dctl">
+<div class="stp"><span class="sm">COUNT</span><button class="b" onclick="stp('n',-1)">−</button><b id="dn">1</b><button class="b" onclick="stp('n',1)">+</button></div>
+<div class="stp"><span class="sm">MOD</span><button class="b" onclick="stp('m',-1)">−</button><b id="dx">0</b><button class="b" onclick="stp('m',1)">+</button></div>
+<div class="mc"><button data-rm="d" onclick="setMode('d')">DIS</button><button data-rm="n" onclick="setMode('n')">NORM</button><button data-rm="a" onclick="setMode('a')">ADV</button><button class="critb" onclick="setCrit()" title="Double dice on damage rolls">CRIT</button></div></div>
+<div class="dice"><button onclick="tap(4)">d4</button><button onclick="tap(6)">d6</button><button onclick="tap(8)">d8</button><button onclick="tap(10)">d10</button><button onclick="tap(12)">d12</button><button onclick="tap(20)">d20</button><button onclick="tap(100)">d100</button></div>
+<div class="dctl"><input id="dexp" placeholder="Formula: 2d8+4, 4d6, d20+7" style="flex:1;min-width:180px" onkeydown="if(event.key==='Enter')fRoll()"><button class="b" onclick="fRoll()">ROLL</button></div>
+<h3 style="margin-top:14px">Quick rolls</h3>
+<div class="rest"><button class="b" onclick="rl('Initiative',2)">Initiative</button><button class="b" onclick="rl('Spell attack',V.atk)">Spell attack</button><button class="b" onclick="rl('Concentration (CON, adv)',V.con,1)">Concentration</button><button class="b" onclick="rd('Hit Die','1d8',2)">Hit Die</button><button class="b" onclick="rl('Death save',0)">Death save</button><button class="b" onclick="rl('Perception',7)">Perception</button></div>
+<p class="sm">ADV / DIS applies to every d20 roll on the sheet and here, and they cancel each other. CRIT doubles the dice on damage rolls and tray or formula rolls that are not a single d20.</p></div>
+<div class="c full"><h2>History</h2><div id="dh2"></div><button class="b" style="margin-top:8px" onclick="HIST=[];st('hist','[]');renderLog()">CLEAR HISTORY</button></div>
+</div></section>
+<footer><span class="sm">VOX · LV5 TIEFLING WILDFIRE DRUID · autosaves in this browser</span><div><button class="b" onclick="window.print()">PRINT / PDF</button> <button class="b" onclick="dlg(1)">EXPORT</button> <button class="b" onclick="dlg(0)">IMPORT</button></div></footer></div>
+
+<div id="log"><div class="h" onclick="this.parentNode.classList.toggle('min')"><span>▌ ROLL LOG</span><span>▾</span></div><div class="rm"><button data-rm="d" onclick="setMode('d')">DIS</button><button data-rm="n" onclick="setMode('n')">NORM</button><button data-rm="a" onclick="setMode('a')">ADV</button><button class="critb" onclick="setCrit()" title="Double dice on damage rolls">CRIT</button></div><div id="le"></div></div>
+<div id="toast"></div><button id="fab" onclick="tab(6)" aria-label="Open dice roller">🎲</button>
+<div id="dlg"><div><h3 class="am" style="font-size:20px" id="dt">EXPORT</h3><p class="sm" id="dh"></p><textarea id="dj"></textarea><div style="display:flex;gap:8px;margin-top:8px"><button class="b" id="dg" onclick="dgo()">COPY</button><button class="b" onclick="dlg(-1)">CLOSE</button></div></div></div>
+
+<script>
+const PF='vox_wildfire_v1_',$=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+const gt=k=>{try{return localStorage.getItem(PF+k)}catch(e){return null}},st=(k,v)=>{try{localStorage.setItem(PF+k,v)}catch(e){}};
+const R=n=>1+Math.floor(Math.random()*n),sg=n=>(n<0?'−':'+')+Math.abs(n),lg=[];let V={};
+const md=s=>Math.floor((s-10)/2),fv=k=>{const e=$(`[data-save=${k}]`);return e?e.value:''};
+function form(){const i=Number(gt('wsform')??-1);if(isNaN(i)||i<0)return null;const f=k=>fv(`wsf${i}_${k}`);return{i,n:f('n'),ac:+f('ac')||10,sp:f('sp'),s:[+f('str')||10,+f('dex')||10,+f('con')||10],atk:f('atk'),tr:f('tr'),sk:Object.fromEntries([...f('sk').matchAll(/([A-Za-z ]+?)\s*([+-]\d+)/g)].map(m=>[m[1].trim(),+m[2]]))}}
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+let MODE=gt('rmode')||'n',CRIT=false,DN=1,DX=0,HIST=[];try{HIST=JSON.parse(gt('hist')||'[]')}catch(e){}
+const msign=()=>MODE=='a'?1:MODE=='d'?-1:0;
+const dv=g=>'['+g.r.map((x,i)=>g.keep!==null&&i!==g.keep?'<s>'+x+'</s>':x).join(', ')+']';
+const dstr=e=>e.groups.map(g=>(g.neg?'−':'')+dv(g)).join(' + ')+(e.mod?' '+(e.mod<0?'−':'+')+' '+Math.abs(e.mod):'');
+const lab=e=>esc(e.l)+(e.adv>0?' · ADV':e.adv<0?' · DIS':'')+(e.crit?' · CRIT':'');
+const row=(e,b)=>e.msg?`<div class="${b?'hr':'e'} ${e.c||''}"><span>${e.l}</span><b style="font-size:${b?16:14}px">${e.t}</b></div>`:`<div class="${b?'hr':'e'} ${e.n20?'n20':e.n1?'n1':''}"><div><span>${lab(e)}</span><small>${dstr(e)}</small></div><b>${e.total}</b></div>`;
+function renderLog(){$('#le').innerHTML=HIST.slice(0,6).map(e=>row(e,0)).join('')||'<div class="e dm">Tap a number to roll.</div>';$('#dh2').innerHTML=HIST.slice(0,40).map(e=>row(e,1)).join('')||'<p class="dm">No rolls yet.</p>'}
+function parseEx(x){x=String(x).replace(/\s+/g,'').toLowerCase();if(!x)return null;const re=/([+-]?)(\d*)d(\d+)|([+-]?)(\d+)/g;let m,t=[],mod=0,u='';while((m=re.exec(x))){u+=m[0];if(m[3]){const n=+(m[2]||1),sd=+m[3];if(n<1||n>50||sd<2||sd>1000)return null;t.push({n,s:sd,neg:m[1]=='-'})}else mod+=(m[4]=='-'?-1:1)*(+m[5])}return u!==x||(!t.length&&!mod)||!t.length?null:{terms:t,mod}}
+function roll(label,terms,mod,o){o=o||{};const dmg=!!(o.dmg&&CRIT),gs=[];let tot=mod;
+terms.forEach(t=>{const n=t.n*(dmg?2:1);let r=[],keep=null;
+if(o.adv&&t.s==20&&n==1&&terms.length==1){r=[R(20),R(20)];keep=o.adv>0?(r[0]>=r[1]?0:1):(r[0]<=r[1]?0:1)}else for(let i=0;i<n;i++)r.push(R(t.s));
+const sum=keep===null?r.reduce((a,b)=>a+b,0):r[keep];tot+=t.neg?-sum:sum;gs.push({s:t.s,r,keep,neg:!!t.neg})});
+const g=gs[0],one=terms.length==1&&terms[0].n==1&&g.s==20,k=one?(g.keep===null?g.r[0]:g.r[g.keep]):null;
+const e={l:label,groups:gs,mod,total:tot,crit:dmg,adv:one?(o.adv||0):0,n20:k===20,n1:k===1};
+HIST.unshift(e);HIST.length=Math.min(HIST.length,60);st('hist',JSON.stringify(HIST));renderLog();showBig(e);toast(e);
+if(!$('#tdice').classList.contains('on'))$('#log').classList.remove('min');return e}
+function showBig(e){const d=$('#dres');if(!d||!$('#tdice').classList.contains('on'))return;clearInterval(showBig.t);const mx=Math.max(6,...e.groups.map(g=>g.s));let k=0;d.className='';$('#dsub').textContent='rolling…';
+showBig.t=setInterval(()=>{if(++k<10)d.textContent=R(Math.min(mx,100));else{clearInterval(showBig.t);d.textContent=e.total;d.className=e.n20?'n20':e.n1?'n1':'';$('#dsub').innerHTML=lab(e)+'<br>'+dstr(e)}},45)}
+function toast(e){if($('#tdice').classList.contains('on'))return;const t=$('#toast');t.className='on '+(e.n20?'n20':e.n1?'n1':'');t.innerHTML=`<small>${lab(e)}</small><b>${e.total}</b><small>${dstr(e)}</small>`;clearTimeout(toast.t);toast.t=setTimeout(()=>t.className='',2600)}
+function out(l,t,c){HIST.unshift({msg:1,l,t,c});HIST.length=Math.min(HIST.length,60);st('hist',JSON.stringify(HIST));renderLog()}
+function rl(l,m,adv){roll(l,[{n:1,s:20}],m,{adv:Math.sign((adv?1:0)+msign())})}
+function rd(l,ex,mod=0){const p=parseEx(ex);roll(l,p.terms,mod+p.mod,{dmg:!/hit die|heal/i.test(l)})}
+function setMode(m){MODE=m;st('rmode',m);$$('[data-rm]').forEach(b=>b.classList.toggle('on',b.dataset.rm==m))}
+function setCrit(){CRIT=!CRIT;$$('.critb').forEach(b=>b.classList.toggle('on',CRIT))}
+function stp(k,d){if(k=='n')DN=Math.max(1,Math.min(20,DN+d));else DX=Math.max(-20,Math.min(20,DX+d));$('#dn').textContent=DN;$('#dx').textContent=DX>0?'+'+DX:DX}
+function tap(s){roll(DN+'d'+s,[{n:DN,s}],DX,{adv:s==20&&DN==1?msign():0,dmg:s!=20})}
+function fRoll(){const i=$('#dexp'),p=parseEx(i.value);if(!p){i.style.borderColor='var(--rd)';return}i.style.borderColor='';const one=p.terms.length==1&&p.terms[0].n==1&&p.terms[0].s==20;roll(i.value.trim(),p.terms,p.mod,{adv:one?msign():0,dmg:!one})}
+const on=k=>{const e=$(`[data-save=${k}]`);return e&&e.checked};
+function calc(){const sk=+on('moon'),cl=+on('cloak'),wd=on('warden'),mg=wd?0:4;
+V={ac:15+cl,atk:7+sk,dc:15+sk,sick:2+sk,sickd:sk-1,scim:wd?5:2,str:-1+cl,dex:2+cl,con:2+cl,int:3+cl,wis:7+cl,cha:1+cl};const fm=form();if(fm){const ce=cl&&on('wsworn')?1:0;V.ac=fm.ac+ce;V.str=md(fm.s[0])+ce;V.dex=md(fm.s[1])+ce;V.con=md(fm.s[2])+ce;V.int=3+ce;V.wis=7+ce;V.cha=1+ce}renderAB();$('#spd').innerHTML=fm?fm.sp.split(',')[0]:'30<span style="font-size:16px"> ft</span>';$('#t0 table').style.opacity=fm?.4:1;
+$$('[data-v]').forEach(e=>{const v=V[e.dataset.v];e.textContent=e.hasAttribute('data-n')?v:sg(v)});
+$('#sicklen').textContent=sk?'Moon Sickle +1':'Sickle';$('#sickd').textContent='1d4'+(V.sickd?sg(V.sickd):'');
+$$('.sv').forEach(e=>e.textContent=sg(V[e.dataset.k]));
+const S=[['Acrobatics',fm?md(fm.s[1]):2],['Animal Handling',7,1],['Arcana',mg],['Athletics',fm?md(fm.s[0]):-1],['Deception',1],['History',0],['Insight',4],['Intimidation',1],['Investigation',0],['Medicine',4],['Nature',3+mg,1],['Perception',7,1],['Performance',1],['Persuasion',1],['Religion',0],['Sleight of Hand',fm?md(fm.s[1]):2],['Stealth',fm?md(fm.s[1]):2],['Survival',7,1]];
+if(fm)S.forEach(s=>{const b=fm.sk[s[0]];if(b!==undefined&&b>s[1])s[1]=b});$('#sk').innerHTML=S.map(s=>`<div class="${s[2]?'pr':''}"><span>${s[0]}</span><span class="roll" onclick="rl('${s[0]}',${s[1]})">${sg(s[1])}</span></div>`).join('');renderWS()}
+const AB=[['STR',8,-1,'str'],['DEX',14,2,'dex'],['CON',14,2,'con'],['INT',10,0,'int',1],['WIS',18,4,'wis',1],['CHA',12,1,'cha']];
+const renderAB=()=>{const fm=form();$('#abil').innerHTML=AB.map((a,ix)=>(fm&&ix<3&&(a=[a[0],fm.s[ix],md(fm.s[ix]),a[3]]),`<div class="ab ${a[4]?'p':''}" tabindex="0" role="button" onclick="rl('${a[0]} check',${a[2]})"><div class="n">${a[0]}</div><div class="m">${sg(a[2])}</div><div class="s">${a[1]} · save <span class="roll sv" data-k="${a[3]}" style="min-width:0;padding:0 3px" onclick="event.stopPropagation();rl('${a[0]} save',V.${a[3]})"></span></div></div>`)).join('')};
+$('#slots').innerHTML=[[1,4],[2,3],[3,2]].map(([l,n])=>`<div class="slot">Level ${l} (${n})<div>${Array.from({length:n},(_,i)=>`<input type="checkbox" data-save="s${l}${i+1}" aria-label="Level ${l} slot ${i+1}">`).join('')}</div></div>`).join('');
+const SKD=['Perception +3, Stealth +4','Perception +4, Stealth +6','Perception +3','Stealth +2','Perception +3',''];
+const FD=[['Wolf','1/4',13,'40 ft.',12,15,12,'Bite +4 1d6+2','Keen Hearing and Smell. Pack Tactics (adv. on attacks vs a creature with an ally of yours within 5 ft.). Bite: DC 11 STR save or knocked prone. Perception +3, Stealth +4.'],['Panther','1/4',12,'50 ft., climb 40 ft.',14,15,10,'Bite +4 1d6+2; Claw +4 1d4+2','Keen Smell. Pounce: after moving 20+ ft. straight and hitting with a claw, DC 12 STR save or prone, then a bonus-action bite. Perception +4, Stealth +6.'],['Black Bear','1/2',11,'40 ft., climb 30 ft.',15,10,14,'Bite +3 1d6+2; Claw +3 2d4+2','Keen Smell. Multiattack: one bite and one claw. Perception +3.'],['Crocodile','1/2',12,'20 ft., swim 30 ft.',15,10,13,'Bite +4 1d10+2','Hold Breath (15 min.). Bite grapples (escape DC 12); the target is restrained and it cannot bite another. Stealth +2.'],['Giant Badger','1/4',10,'30 ft., burrow 10 ft.',13,10,15,'Bite +3 1d6+1; Claw +3 2d4+1','Keen Smell. Darkvision 30 ft. Multiattack: one bite and one claw. Perception +3.'],['Riding Horse','1/4',10,'60 ft.',16,10,12,'Hooves +5 2d4+3','Fast overland travel. Can carry a rider or pack load.']];
+$('#fm').innerHTML=FD.map((f,i)=>`<div class="c fcard" id="fc${i}"><div class="fh"><input data-save="wsf${i}_n" value="${f[0]}" class="fn" aria-label="Form name"><label class="sm">CR <input data-save="wsf${i}_cr" value="${f[1]}" style="width:48px"></label></div><div class="fr"><label>AC <input type="number" data-save="wsf${i}_ac" value="${f[2]}"></label><label>Speed <input data-save="wsf${i}_sp" value="${f[3]}" style="width:150px"></label></div><div class="fr"><label>STR <input type="number" data-save="wsf${i}_str" value="${f[4]}"></label><label>DEX <input type="number" data-save="wsf${i}_dex" value="${f[5]}"></label><label>CON <input type="number" data-save="wsf${i}_con" value="${f[6]}"></label></div><label class="sm">Attacks<input data-save="wsf${i}_atk" value="${f[7]}" style="width:100%"></label><label class="sm">Beast skills<input data-save="wsf${i}_sk" value="${SKD[i]}" style="width:100%"></label><textarea data-save="wsf${i}_tr" style="min-height:70px;font-size:11px">${f[8]}</textarea><button class="b" onclick="assume(${i})">ASSUME FORM (−1 USE)</button></div>`).join('');
+$('#nav').innerHTML=['Overview','Wild Shape','Features','Spells','Inventory','Contacts & Notes','Dice'].map((t,i)=>`<button class="${i?'':'on'}" onclick="tab(${i})">${t}</button>`).join('');
+function tab(i){$$('.tab').forEach((e,j)=>e.classList.toggle('on',i==j));$$('#nav button').forEach((e,j)=>e.classList.toggle('on',i==j));document.body.classList.toggle('dt',i==6);window.scrollTo(0,0)}
+$$('[data-save]').forEach(el=>{const v=gt(el.dataset.save);if(v!==null){if(el.type==='checkbox')el.checked=v==='true';else el.value=v}el.addEventListener('input',()=>{st(el.dataset.save,el.type==='checkbox'?el.checked:el.value);calc()})});
+let h=gt('hp')===null?38:Number(gt('hp'));
+let th=Number(gt('thp')||0);
+function draw(){$('#hpv').textContent=h;$('#thp').textContent=th?' +'+th:'';renderWS();const b=$('#hpbox');b.classList.toggle('lo',h<=19&&h>7);b.classList.toggle('cr',h<=7)}
+function hp(d){if(d<0&&th){const a=Math.min(th,-d);th-=a;d+=a;st('thp',th)}h=Math.max(0,Math.min(38,h+d));st('hp',h);draw()}
+function clr(sel){$$(sel).forEach(e=>{if(e.checked){e.checked=false;e.dispatchEvent(new Event('input'))}})}
+function rest(t){if(t=='l'){h=38;th=0;st('hp',h);st('thp',0);st('wsform',-1);clr('[data-save^=s1],[data-save^=s2],[data-save^=s3],[data-save^=wild],[data-save=wr]');calc();draw();out('Long Rest','Reset','')}else{const e=$$('[data-save^=wild]').find(x=>x.checked);if(e){e.checked=false;e.dispatchEvent(new Event('input'))}out('Short Rest','+1 Wild Shape','')}}
+function dlg(m){const d=$('#dlg');if(m<0){d.classList.remove('on');return}d.classList.add('on');d.dataset.m=m;$('#dt').textContent=m?'EXPORT':'IMPORT';$('#dg').textContent=m?'COPY':'LOAD';$('#dh').textContent=m?'Copy this JSON and keep it somewhere safe.':'Paste exported JSON, then press Load.';
+if(m){const o={hp:h,thp:th,wsform:gt('wsform'),wshrs:gt('wshrs')};$$('[data-save]').forEach(e=>o[e.dataset.save]=e.type==='checkbox'?e.checked:e.value);$('#dj').value=JSON.stringify(o,null,2)}else $('#dj').value=''}
+function dgo(){const j=$('#dj');if($('#dlg').dataset.m=='1'){j.select();try{navigator.clipboard.writeText(j.value)}catch(e){document.execCommand('copy')}return}
+try{const o=JSON.parse(j.value);Object.entries(o).forEach(([k,v])=>{if(k==='hp'){h=Number(v);st('hp',h);draw();return}if(k==='thp'){th=Number(v)||0;st('thp',th);draw();return}if(k==='wsform'||k==='wshrs'){st(k,v);calc();draw();return}const e=$(`[data-save=${k}]`);if(e){if(e.type==='checkbox')e.checked=!!v;else e.value=v;e.dispatchEvent(new Event('input'))}});dlg(-1)}catch(e){j.value='Could not import: invalid JSON.'}}
+const E=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])),slots=()=>$$('[data-save^=s1],[data-save^=s2],[data-save^=s3]');
+function ev(e,v){e.checked=v;e.dispatchEvent(new Event('input'))}
+function useWS(){const e=$$('[data-save^=wild]').find(x=>!x.checked);if(!e)return false;ev(e,true);return true}
+function assume(i){if(!useWS()){out('Wild Shape','No uses left','n1');return}st('wsform',i);th=Math.max(th,5);st('thp',th);st('wshrs',2);calc();draw();out('Wild Shape',E(fv(`wsf${i}_n`)),'')}
+function revert(){st('wsform',-1);calc();draw();out('Wild Shape','Reverted','')}
+function wsh(d){const x=Math.max(0,(Number(gt('wshrs'))||2)+d);st('wshrs',x);if(!x){revert();return}draw()}
+function spirit(){out('Wildfire Spirit',useWS()?'Summoned (−1 use)':'No uses left','')}
+function comp(){if(form()){out('Find Familiar','Cannot cast while shifted','n1');return}out('Find Familiar',useWS()?'Cast (−1 use, Magic action)':'No uses left','')}
+function wrSlot(){if($$('[data-save^=wild]').some(x=>!x.checked)){out('Wild Resurgence','You still have uses','n1');return}const s=slots().find(x=>!x.checked);if(!s){out('Wild Resurgence','No slot left','n1');return}ev(s,true);ev($('[data-save^=wild]:checked'),false);out('Wild Resurgence','Slot → +1 use','')}
+function wrUse(){const wr=$('[data-save=wr]');if(wr.checked){out('Wild Resurgence','Used since Long Rest','n1');return}const sp=$$('[data-save^=s1]').filter(x=>x.checked);if(!sp.length){out('Wild Resurgence','No spent level 1 slot','n1');return}if(!useWS()){out('Wild Resurgence','No uses left','n1');return}ev(sp[0],false);ev(wr,true);out('Wild Resurgence','Use → level 1 slot','')}
+function renderWS(){const fm=form(),hr=Number(gt('wshrs'))||2,n=$$('[data-save^=wild]').filter(x=>!x.checked).length;
+$('#wsu').textContent=n+' / 2';
+$('#wsb').innerHTML=fm?`<div class="wsb"><span>◈ WILD SHAPE · <b>${E(fm.n)}</b> · ${hr} hr left · AC ${fm.ac}${th?' · Temp HP '+th:''} · no spellcasting</span><button class="b" onclick="revert()">REVERT</button></div>`:'';
+$$('.fcard').forEach((e,i)=>e.classList.toggle('act',!!fm&&fm.i===i));
+if(!fm){$('#wsa').innerHTML='<p class="dm">Not transformed. Choose a form below.</p>';return}
+const at=fm.atk.split(';').map(s=>s.trim().match(/^(.+?)\s*([+-]\d+)\s+(\d+d\d+)([+-]\d+)?/)).filter(Boolean).map(m=>`<tr><td class="am">${E(m[1])}</td><td><span class="roll" onclick="rl('${E(m[1])}',${m[2]})">${m[2]}</span></td><td><span class="roll" onclick="rd('${E(m[1])}','${m[3]}',${m[4]||0})">${m[3]}${m[4]||''}</span></td></tr>`).join('');
+$('#wsa').innerHTML=`<div class="note" style="border-color:var(--am)"><h3 style="margin:0;color:var(--am);font-size:22px">${E(fm.n).toUpperCase()}</h3><p>AC <b class="cy">${fm.ac}</b> · Speed <b class="cy">${E(fm.sp)}</b> · STR ${fm.s[0]} (${sg(md(fm.s[0]))}) · DEX ${fm.s[1]} (${sg(md(fm.s[1]))}) · CON ${fm.s[2]} (${sg(md(fm.s[2]))})</p>${at?`<table><tr><th>ATTACK</th><th>HIT</th><th>DAMAGE</th></tr>${at}</table>`:''}<p class="dm">${E(fm.tr)}</p><div class="tr"><div>Temp HP <b class="am">${th}</b> · ${hr} hr left</div><div><input type="number" id="wsd" value="1" min="1"> <button class="b" onclick="hp(-(+$('#wsd').value||0))">TAKE DAMAGE</button> <button class="b" onclick="wsh(-1)">−1 HR</button> <button class="b" onclick="revert()">REVERT</button></div></div><p class="sm">Stats are replaced by the beast's; skill and save proficiencies are kept (beast bonus used where higher). No spellcasting. Use the cloak toggle above if the DM lets it stay worn.</p></div>`}
+setMode(MODE);renderLog();calc();draw();
+</script></body></html>
